@@ -29,7 +29,7 @@ encodedChar = ~"<" any
 TabbedDiagrams [h @d t] = [[${d}]]
 Header [k k2 @ec] = [[${k}${k2}${ec}]]
 Trailer [k] = [[${k}]]
-Diagram [k @a k2 @ec k3] = [[${k}${a}${k2}${ec}${k3}]]
+Diagram [k @a k2 @ec k3] = [[${k}${a}${k2}${decodeMxDiagram(ec)}${k3}\n]]
 Attribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
@@ -60,6 +60,7 @@ encodedChar [c] = [[${c}]]
 <script src="../scnwb/ohm.js"></script>
 <script src="../scnwb/glue.js"></script>
 <script src="../scnwb/scope.js"></script>
+<script src="../scnwb/pako/dist/pako_inflate.js"></script>
 <script src="support.js"></script>
 <script>
 
