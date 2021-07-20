@@ -26,11 +26,11 @@ encodedChar = ~"<" any
 
 <p>emit:</p>
 <textarea id="semantics" rows="1" cols="90" placeholder="semantics" style="background-color:oldlace;">
-TabbedDiagrams [h @d t] = [[${h}${d}${t}]]
+TabbedDiagrams [h @d t] = [[${d}]]
 Header [k k2 @ec] = [[${k}${k2}${ec}]]
 Trailer [k] = [[${k}]]
 Diagram [k @a k2 @ec k3] = [[${k}${a}${k2}${ec}${k3}]]
-Attribute [@an k s] = [[${an}${k}${s}]]
+Attribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
 encodedChar [c] = [[${c}]]
