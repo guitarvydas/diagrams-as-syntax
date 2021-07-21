@@ -100,14 +100,77 @@ OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
 </textarea>
 
 
-<p>diagrams net attribute expanded:</p>
-<textarea id="styleexpandertranspiled" rows="17" cols="90" placeholder="style attribute expander"  readonly style="background-color:whitesmoke;">
+<p>diagrams net style expanded:</p>
+<textarea id="styleexpandertranspiled" rows="17" cols="90" placeholder="style expander"  readonly style="background-color:whitesmoke;">
 </textarea>
 <br>
 <br>
 <p id="styleexpanderstatus" > READY </p>
 
 <!-- end diagrams.net style expander -->
+
+
+
+
+
+<!-- diagrams.net attribute elider -->
+
+<p>grok (attributeelider):</p>
+<textarea id="attributeelidergrammar" name="a" rows="1" cols="90" placeholder="attributeelider grammar" style="background-color:oldlace;">
+AppAttributeelider{
+  Diagrams = Diagram+
+  Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
+  Attribute = alnum+ "=" string
+  string= "\"" notDQ* "\""
+  notDQ = ~"\"" any
+  encodedChar = ~"<" any		   
+
+  GraphModel = "<mxGraphModel" Attribute+ ">" Root "</mxGraphModel>" 
+  Root = "<root>" Cell+ "</root>"
+  Cell = CellWithContent | CellWithoutContent
+  CellWithoutContent = "<mxCell" CellAttribute+ "/>"
+  CellWithContent = "<mxCell" CellAttribute+ ">" Geometry? "</mxCell>"	     
+  Geometry = "<mxGeometry" Attribute+ "/>"
+  CellAttribute = OtherCellAttribute
+  OtherCellAttribute = alnum+ "=" string
+}
+
+</textarea>
+
+<p>emit (attributeelider):</p>
+<textarea id="attributeelidersemantics" rows="1" cols="90" placeholder="decode semantics" style="background-color:oldlace;">
+Diagrams [@ds] = [[${ds}]]
+Diagram [k @a k2 graphmodel k3] = [[${k}${a}${k2}\n${graphmodel}\n${k3}\n]]
+Attribute [@an k s] = [[\ ${an}${k}${s}]]
+string [q1 @cs q2] = [[${q1}${cs}${q2}]]
+notDQ [c] = [[${c}]]
+encodedChar [c] = [[${c}]]
+
+GraphModel [k1 @as k2 root k3] = [[${k1}${as}${k2}${root}${k3}]]
+Root [k1 @cells k2] = [[${k1}${cells}${k2}]]
+Cell [c] = [[${c}]]
+CellWithoutContent [k1 @as k2] = [[${k1}${as}${k2}]]
+CellWithContent [k1 @as k2 @geometry k3] = [[${k1}${as}${k2}${geometry}${k3}]]
+Geometry [k1 @as k2] = [[${k1}${as}${k2}]]
+
+CellAttribute [a] = [[\ ${a}]]
+OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
+
+</textarea>
+
+
+<p>diagrams net attribute elider:</p>
+<textarea id="attributeelidertranspiled" rows="17" cols="90" placeholder="attribute elider"  readonly style="background-color:whitesmoke;">
+</textarea>
+<br>
+<br>
+<p id="attributeeliderstatus" > READY </p>
+
+<!-- end diagrams.net attribute elider -->
+
+
+
+
 
 
 
@@ -154,9 +217,14 @@ OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
     run ('styleexpandergrammar', 'styleexpandersemantics', 'decodertranspiled', 'styleexpandertranspiled', 'styleexpanderstatus');
   }
   
+  function attributeEliderTranspile () {
+    run ('attributeelidergrammar', 'attributeelidersemantics', 'styleexpandertranspiled', 'attributeelidertranspiled', 'attributeeliderstatus');
+  }
+  
   function generate () {
       decode ();
       styleexpandertranspile ();
+      attributeEliderTranspile ();
   }
 
   </script>
