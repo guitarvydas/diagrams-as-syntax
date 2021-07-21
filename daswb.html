@@ -10,9 +10,9 @@ textarea {
 
 <h1>DaS Transpiler Workbench (app.diagrams.net to xvg to ...)</h1>
 
-<p>grok:</p>
-<textarea id="grammar" name="a" rows="1" cols="90" placeholder="grammar" style="background-color:oldlace;">
-AppDiagramsNet{
+<p>grok (decoder):</p>
+<textarea id="decodergrammar" name="a" rows="1" cols="90" placeholder="decoder grammar" style="background-color:oldlace;">
+AppDiagramsEncodedNet{
 TabbedDiagrams = Header Diagram+ Trailer
 Header = "<" "mxfile" encodedChar+
 Trailer = "</mxfile>"
@@ -24,8 +24,8 @@ encodedChar = ~"<" any
 }
 </textarea>
 
-<p>emit:</p>
-<textarea id="semantics" rows="1" cols="90" placeholder="semantics" style="background-color:oldlace;">
+<p>emit (decoder):</p>
+<textarea id="decodersemantics" rows="1" cols="90" placeholder="decode semantics" style="background-color:oldlace;">
 TabbedDiagrams [h @d t] = [[${d}]]
 Header [k k2 @ec] = [[${k}${k2}${ec}]]
 Trailer [k] = [[${k}]]
@@ -36,24 +36,81 @@ notDQ [c] = [[${c}]]
 encodedChar [c] = [[${c}]]
 </textarea>
 
-<p>source:</p>
-<textarea id="source" name="source" rows="17" cols="90" placeholder="notation test" style="background-color:oldlace;">
-<mxfile host="Electron" modified="2021-07-20T03:09:53.162Z" agent="5.0 (Macintosh; Intel Mac OS X 11_3_1) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/14.6.13 Chrome/89.0.4389.128 Electron/12.0.7 Safari/537.36" etag="LbURwSQn83haC3DuYDt_" version="14.6.13" type="device" pages="3">
-<diagram id="HQaUK7b0CWS-_TARSPO3" name="hwapp">5VdNj5swEP01HFsFDITrbpJuq3a1h0jtdi+Vgw24MRg5QyD99bXBfJVsmlZJtdWSQ5g34zF+bzwGCy3S6k7iPLkXhHLLmZHKQkvLcWx75qs/jRwaJGiBWDJignpgzX5QA84MWjBCd6NAEIIDy8dgKLKMhjDCsJSiHIdFgo9nzXFMJ8A6xHyKfmEEkm5ds97xnrI4MVMHnnGkuA02wC7BRJQDCK0stJBCQHOXVgvKNXktL824d894uweTNINzBsjiXmyePm9jutp/fHrIkP9h+cZk2WNemAVb6EYBSYnz3Dw3HFoypCgyQnU+20K3ZcKArnMcam+p5FdYAik37j2VwBSRN5zFmcJA6ICIcb4QXMg6I4o8/VP4DqTY0oHHry89QmQwwJtL4dP1t4tRE9NqABk+7qhIKciDCmm9rTZdcTZm2SvtugZLBiJ31YlNdcVd6l4AdWM0+AM9nIkeTNW1VFCjy7dMZDilW5aRa6hzCU6DMacdxwNSkXOEVNu9FqloQqooYEKfSqSaCv09dXiXN50mYpWme1LTUeSEoQ403IaKTaXhkSIn/sb3dJErcuFBzchA06Z6yEW08NxftJh7Uy2OSIGupYQ7ZZ2odmtMISERsSpwvurR276sNSt9zCehS7ZW5DsFOJizAxcgxnrRisHj4P6rTvXWM9ayMplr49AamVru49AYjNJmP6y22nHPirYThQzpCWqMMoBlTOFEnDk+NW8nS0BSjoHtx8fYxQX1jvSr6+0s4tGAuGftrMDZIP96O8u2X9jO8l+rEHP3ZQkx/19a3N+3quDMVoVeVKsKXutbgPvvtogy+w+a2jf4LESrnw==
-</diagram>
-<diagram id="PCEYNFZqdCUcrfXb7Y2_" name="hwsub">5Vddk5owFP01PG5HiCg+ruja7thPZ6fbvnQiuUB2A3FiVOivbwJhAXGsdup2O4sP5p7cXOCc+zFYyE+ymcCr+D0nwCynRzILTSzHsXtDV/1pJC+RoTMqgUhQYpxqYEF/QnXSoBtKYN1ylJwzSVdtMOBpCoFsYVgIvmu7hZy177rCEXSARYBZF/1KiYwNavd69cZboFFsbu25ZiPBlbMB1jEmfNeA0NRCvuBclqsk84Fp8ipeZtT7PEJz/zbZvgvz4WQx/+5dlcFuzjny9AoCUvnHod0PYH8J724+TVa90XSbP9wS/8orQ28x2xi+LHStgHi33izNa8u84lLwTUpAx7MtNN7FVMJihQO9u1PZo7BYJsxsb0FIqnS4ZjRKFSa5dggpYz5nXBQRUejqn8LXUvBHaOwMikuf4Kls4OWl8BNJMeTpp4GskRKGpBnwBKTIlYvZHZmEN/neN+rv6uRBVUbEjbyxK0dsEjZ6ilyLohZGlzM0GnU0irlSRD1EIdWPVFUOTuCRpuQSil2KZ9vrtYiuGk2DaNs9QPTwUjxXHatBHxDVS4zJhYx5xFPMpjU6rglWcoxrnznX5BW0PoCUuWmMeCN5m3TIqLxvrL/pUG9cY00yE7kwcmOcJ8mab0QAx1686stYRCCPOaLSUdNyVGIBDEu6bbfgvy9YlXN1ZVx3JWRMjRr4ffbj9aqcPyHNtKD7rYq44JG+djTlESj2QRzqXZ6zREXvUqUgP6o7Uqmlc8/X7vRy2qumUbea0IFiQhcrJqejzfhy2oRh6ATBSdqQwXLgPrM2aG+m/HNxUEcc/9UWjj14YeL0/5cxpIQQ+X3TaJzSZn2ssC41vtxTx5fzssaX26nCyettkfZzVaEy62+2Yq/x5YumvwA=
-</diagram>
-<diagram id="dkHnfYNpTtgTAUIm52f-" name="hwhello">vZbfb5swEMf/Gh47YRwQfVyzLtO0aJMirc8OPrA3g5FxCulfPzuYX3WkLtroE/h75zvdfc6GAG/LbqdIzfaSggiikHYB/hREEUJhYh5WOfdKOgiF4tQ5TcKBv4ATQ6eeOIVm4ailFJrXSzGTVQWZXmhEKdku3XIplllrUoAnHDIifPWJU83GusLJ8AV4wVzqNHaGkgzOTmgYobKdSfgxwFslpe7fym4LwjZv6Au/i3+xl68/DuH+2+5pJ/YY/bzrg32+ZctYgoJK/+fQrrZnIk6uYaxlZqN0Nevz0EglTxUFGwwF+KFlXMOhJpm1tmZ0jMZ0KZxZGgvXdmRMO/EDEbyozCIzBYAywjMozQ2kj86gpQ2QcyG2Ukh1yYjzNIMsM3qjlfwNM8sxjTeXwH/ZGddBmxW62Vy4Tu1AlqDV2biMc3/fbxmnvl+20wjh0Lmw2fSgoaHEjW0xhp7QmBdH5xZSyCf175woadjoeyu0klNqs65H4T78EC84oMgHgZIrIHC8FgfsceCVB8EEMhccvA2ANHV/6+W8syBenwEaQ0o312h4hyKNjjhJjMV0V39fslzvnCCPUDQoi8NyBdFqR2XjIZInvR6jPM+jyz31NiOaHJP4nRltwvg9GZnl9E282GZ/FvjxDw==
-</diagram>
-</mxfile>
+<p>source (diagrams.net raw):</p>
+<textarea id="encodedsource" name="source" rows="17" cols="90" placeholder="diagrams.net raw source" style="background-color:oldlace;">
+<mxfile host="Electron" modified="2021-07-21T11:58:25.904Z" agent="5.0 (Macintosh; Intel Mac OS X 11_3_1) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/14.6.13 Chrome/89.0.4389.128 Electron/12.0.7 Safari/537.36" etag="vNdS7Uco5eM66zlVXK-S" version="14.6.13" type="device" pages="3"><diagram id="HQaUK7b0CWS-_TARSPO3" name="hwapp">5VdRb5swEP41PG4KGAivbZJ201p1U7St68vkYge8GozMkZD++tlgAgTStVOjZSp5iO+7s42/73zGFpol5aXEWXwtCOWWMyGlheaW49j2xFd/GtnWSNAAkWTEBLXAkj1SA04MWjBC814gCMGBZX0wFGlKQ+hhWEqx6YetBO/PmuGIDoBliPkQ/c4IxLt1TVrHB8qi2EwdeMaR4CbYAHmMidh0ILSw0EwKAXUrKWeUa/IaXup+Fwe8uxeTNIXndJDFtbi/+/YQ0cX6091NivyP83dmlDXmhVmwhc4UEG9wlpn3hm1DhhRFSqgez7bQ+SZmQJcZDrV3o+RXWAwJN+41lcAUkWecRanCQOiAFeN8JriQ1Yho5emfwnOQ4oF2PH716B4ihQ5ePwofrr9ZjJqYlh3I8HFJRUJBblVI42202SVnbW5apV3XYHFH5F12YpNd0W7oVgDVMBq8QA9noAdTeS0VVOvyMxUpTugDS8kx1HkNToM+pzuOO6QiZ4RU2z0WqWhAqihgQJ8aSBUV+mfqcJ7VlWbFSk33IKdXKycMdaDhNlRsKg1Hkpz4976nk1yRCzdqRgaaNlVDXkULz93TYuoNtRiRAh1LCXfIOlHl1phCQiwileB80aLnbVprVtqYK6FTtlLkFwXYmrMDFyD6etGSwW2n/UMP9d4z1rw0I1fGtjFStdzbrtHppc22W2U1/Q6KlotChvQJaowygGVE4Yk4c3xq3p5MAUk5BrbuH2OvLqg3Uq+Ot7OIRwPiPmtnBc498o+3s2z7xHaW/1aFmLqnJcT0fylxf1+qgmeWKnRSpSp4q18B7j/cIl/mfBk/Xnz1roIzu/SvtuHnfOTSATQHnVFq/dVqCz4QpvL1FOjzqD6M6Z4KBhoIsP/tmzBC+CHJ+3vzAPcjCh2UA+0fHWO3jrFLx8vlUGZ7v6x8nVs6WvwG</diagram><diagram id="PCEYNFZqdCUcrfXb7Y2_" name="hwsub">5Vddk5owFP01PG5HiCg+ruja7thPZ6fbvnQiuUB2A3FiVOivbwJhAXGsdup2O4sP5p7cXOCc+zFYyE+ymcCr+D0nwCynRzILTSzHsXtDV/1pJC+RoTMqgUhQYpxqYEF/QnXSoBtKYN1ylJwzSVdtMOBpCoFsYVgIvmu7hZy177rCEXSARYBZF/1KiYwNavd69cZboFFsbu25ZiPBlbMB1jEmfNeA0NRCvuBclqsk84Fp8ipeZtT7PEJz/zbZvgvz4WQx/+5dlcFuzjny9AoCUvnHod0PYH8J724+TVa90XSbP9wS/8orQ28x2xi+LHStgHi33izNa8u84lLwTUpAx7MtNN7FVMJihQO9u1PZo7BYJsxsb0FIqnS4ZjRKFSa5dggpYz5nXBQRUejqn8LXUvBHaOwMikuf4Kls4OWl8BNJMeTpp4GskRKGpBnwBKTIlYvZHZmEN/neN+rv6uRBVUbEjbyxK0dsEjZ6ilyLohZGlzM0GnU0irlSRD1EIdWPVFUOTuCRpuQSil2KZ9vrtYiuGk2DaNs9QPTwUjxXHatBHxDVS4zJhYx5xFPMpjU6rglWcoxrnznX5BW0PoCUuWmMeCN5m3TIqLxvrL/pUG9cY00yE7kwcmOcJ8mab0QAx1686stYRCCPOaLSUdNyVGIBDEu6bbfgvy9YlXN1ZVx3JWRMjRr4ffbj9aqcPyHNtKD7rYq44JG+djTlESj2QRzqXZ6zREXvUqUgP6o7Uqmlc8/X7vRy2qumUbea0IFiQhcrJqejzfhy2oRh6ATBSdqQwXLgPrM2aG+m/HNxUEcc/9UWjj14YeL0/5cxpIQQ+X3TaJzSZn2ssC41vtxTx5fzssaX26nCyettkfZzVaEy62+2Yq/x5YumvwA=&#xa;</diagram><diagram id="dkHnfYNpTtgTAUIm52f-" name="hwhello">vZbfb5swEMf/Gh47YRwQfVyzLtO0aJMirc8OPrA3g5FxCulfPzuYX3WkLtroE/h75zvdfc6GAG/LbqdIzfaSggiikHYB/hREEUJhYh5WOfdKOgiF4tQ5TcKBv4ATQ6eeOIVm4ailFJrXSzGTVQWZXmhEKdku3XIplllrUoAnHDIifPWJU83GusLJ8AV4wVzqNHaGkgzOTmgYobKdSfgxwFslpe7fym4LwjZv6Au/i3+xl68/DuH+2+5pJ/YY/bzrg32+ZctYgoJK/+fQrrZnIk6uYaxlZqN0Nevz0EglTxUFGwwF+KFlXMOhJpm1tmZ0jMZ0KZxZGgvXdmRMO/EDEbyozCIzBYAywjMozQ2kj86gpQ2QcyG2Ukh1yYjzNIMsM3qjlfwNM8sxjTeXwH/ZGddBmxW62Vy4Tu1AlqDV2biMc3/fbxmnvl+20wjh0Lmw2fSgoaHEjW0xhp7QmBdH5xZSyCf175woadjoeyu0klNqs65H4T78EC84oMgHgZIrIHC8FgfsceCVB8EEMhccvA2ANHV/6+W8syBenwEaQ0o312h4hyKNjjhJjMV0V39fslzvnCCPUDQoi8NyBdFqR2XjIZInvR6jPM+jyz31NiOaHJP4nRltwvg9GZnl9E282GZ/FvjxDw==&#xa;</diagram></mxfile>
 </textarea>
 
-<p>transpiled:</p>
-<textarea id="transpiled" name="transpiled" rows="17" cols="90" placeholder="transpiled"  readonly style="background-color:whitesmoke;">
+<p>decoded:</p>
+<textarea id="decodertranspiled" name="transpiled" rows="17" cols="90" placeholder="decoded"  readonly style="background-color:whitesmoke;">
 </textarea>
 <br>
 <br>
-<p id="status" > READY </p>
+<p id="decoderstatus" > READY </p>
+
+
+
+
+
+<!-- diagrams.net style expander -->
+
+<p>grok (styleexpander):</p>
+<textarea id="styleexpandergrammar" name="a" rows="1" cols="90" placeholder="styleexpander grammar" style="background-color:oldlace;">
+AppStyleexpander{
+  Diagrams = Diagram+
+  Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
+  Attribute = alnum+ "=" string
+  string= "\"" notDQ* "\""
+  notDQ = ~"\"" any
+  encodedChar = ~"<" any		   
+
+  GraphModel = "<mxGraphModel" Attribute+ ">" Root "</mxGraphModel>" 
+  Root = "<root>" Cell+ "</root>"
+  Cell = CellWithContent | CellWithoutContent
+  CellWithoutContent = "<mxCell" CellAttribute+ "/>"
+  CellWithContent = "<mxCell" CellAttribute+ ">" Geometry? "</mxCell>"	     
+  Geometry = "<mxGeometry" Attribute+ "/>"
+  CellAttribute = StyleAttribute | OtherCellAttribute
+  StyleAttribute = "style" "=" string
+  OtherCellAttribute = alnum+ "=" string
+}
+
+</textarea>
+
+<p>emit (styleexpander):</p>
+<textarea id="styleexpandersemantics" rows="1" cols="90" placeholder="decode semantics" style="background-color:oldlace;">
+Diagrams [@ds] = [[${ds}]]
+Diagram [k @a k2 graphmodel k3] = [[${k}${a}${k2}\n${graphmodel}\n${k3}\n]]
+Attribute [@an k s] = [[\ ${an}${k}${s}]]
+string [q1 @cs q2] = [[${q1}${cs}${q2}]]
+notDQ [c] = [[${c}]]
+encodedChar [c] = [[${c}]]
+
+GraphModel [k1 @as k2 root k3] = [[${k1}${as}${k2}${root}${k3}]]
+Root [k1 @cells k2] = [[${k1}${cells}${k2}]]
+Cell [c] = [[${c}]]
+CellWithoutContent [k1 @as k2] = [[${k1}${as}${k2}]]
+CellWithContent [k1 @as k2 @geometry k3] = [[${k1}${as}${k2}${geometry}${k3}]]
+Geometry [k1 @as k2] = [[${k1}${as}${k2}]]
+
+CellAttribute [a] = [[\ ${a}]]
+StyleAttribute [id k s] = [[\ ${expandStyle(s)}]]
+OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
+
+</textarea>
+
+
+<p>diagrams net attribute expanded:</p>
+<textarea id="styleexpandertranspiled" rows="17" cols="90" placeholder="style attribute expander"  readonly style="background-color:whitesmoke;">
+</textarea>
+<br>
+<br>
+<p id="styleexpanderstatus" > READY </p>
+
+<!-- end diagrams.net style expander -->
+
+
+
 
 <br>
 <button onclick="generate ()">Generate</button>
@@ -61,29 +118,47 @@ encodedChar [c] = [[${c}]]
 <script src="../scnwb/glue.js"></script>
 <script src="../scnwb/scope.js"></script>
 <script src="../scnwb/pako/dist/pako_inflate.js"></script>
+<script src="../scnwb/include.js"></script>
 <script src="support.js"></script>
 <script>
+"use strict"
 
-
-  function generate () {
-      let scnGrammar = document.getElementById('grammar').value;
-      let notationSource = document.getElementById('source').value;
-      let semantics = document.getElementById('semantics').value;
-      let generatedSCNSemantics = transpiler (semantics, glueGrammar, "_glue", glueSemantics);
+  function run (grammar, semantics, source, output, status) {
+      let scnGrammar = document.getElementById(grammar).value;
+      let scnSemantics = document.getElementById(semantics).value;
+      let notationSource = document.getElementById(source).value;
+      // glueGrammar and glueSemantics defined in ../scnwb/
+      let generatedSCNSemantics = transpiler (scnSemantics, glueGrammar, "_glue", glueSemantics);
 
       _ruleInit();
       try {
-          document.getElementById('status').innerHTML = "FAILED";
+          document.getElementById(status).innerHTML = "FAILED";
           let semObject = eval('(' + generatedSCNSemantics + ')');
-          document.getElementById ("transpiled").value = semObject;
+          document.getElementById (output).value = semObject;
           let tr = transpiler(notationSource, scnGrammar, "_glue", semObject);
-          document.getElementById('transpiled').value = tr;
-          document.getElementById('status').innerHTML = "OK";
+          document.getElementById(output).value = tr;
+          document.getElementById(status).innerHTML = "OK";
       }
        catch (err) {
-          document.getElementById('status').innerHTML = err;
+          document.getElementById(status).innerHTML = err;
        }
   }
+
+
+  
+  function decode () {
+      run ('decodergrammar', 'decodersemantics', 'encodedsource', 'decodertranspiled', 'decoderstatus');
+  }
+  
+  function styleexpandertranspile () {
+    run ('styleexpandergrammar', 'styleexpandersemantics', 'decodertranspiled', 'styleexpandertranspiled', 'styleexpanderstatus');
+  }
+  
+  function generate () {
+      decode ();
+      styleexpandertranspile ();
+  }
+
   </script>
 </body>
 </html>

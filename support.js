@@ -5,3 +5,12 @@ function decodeMxDiagram (encoded) {
     var str = decodeURIComponent (inf);
     return str;
 }
+
+function expandStyle (s) {
+    var sx = s
+	.replace(/"/g,'')
+	.replace(/ellipse;/g,'kind=ellipse;')
+	.replace(/text;/g,'kind=text;')
+	.replace (/([^=]+)=([^;]+);/g, '$1="$2" ');
+    return sx;
+}
