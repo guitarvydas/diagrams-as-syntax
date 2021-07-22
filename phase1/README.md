@@ -1,5 +1,7 @@
 load daswb.html into a browser
-click "generate"
+click "generate" 
+
+("generate" button is at the very bottom - scroll down)
 
 - details:
 - ../hello.drawio edited with app.diagrams.net (drawio)

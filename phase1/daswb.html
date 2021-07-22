@@ -380,7 +380,7 @@ notDQ [c] = [[${c}]]
 
 GraphModel [k1 @as k2 root k3] = [[${root}]]
 Root [k1 @cells k2] = [[${cells}]]
-Cell [c] = {{scopeAdd ('id', '');}}[[${c}]]
+Cell [c] = {{scopeAdd ('id', '');}}[[cell(${getID()},"").\n${c}]]
 CellWithoutContent [k1 @as k2] = [[${as}]]
 CellWithContent [k1 @as k2 @geometry k3] = [[${as}${geometry}]]
 Geometry [k1 @as k2] = [[${as}]]

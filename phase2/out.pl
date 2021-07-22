@@ -1,4 +1,31 @@
 
+cell("0","").
+cell(id1,"").
+cell(id10,"").
+cell(id11,"").
+cell(id12,"").
+cell(id13,"").
+cell(id14,"").
+cell(id15,"").
+cell(id16,"").
+cell(id17,"").
+cell(id18,"").
+cell(id19,"").
+cell(id2,"").
+cell(id20,"").
+cell(id21,"").
+cell(id22,"").
+cell(id23,"").
+cell(id24,"").
+cell(id25,"").
+cell(id26,"").
+cell(id3,"").
+cell(id4,"").
+cell(id5,"").
+cell(id6,"").
+cell(id7,"").
+cell(id8,"").
+cell(id9,"").
 edge(id15, "").
 edge(id19, "").
 edge(id5, "").

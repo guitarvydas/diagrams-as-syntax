@@ -40,6 +40,15 @@ function getID () {
     return refID (s);
 }
 
+
+
+function refIDfat (s) {
+//function refID (s) {
+    // use refIDTiny to produce smaller ID's (useful for debugging workbench)
+    return "id" + s.replace(/"/g,"");
+}
+
+//function refIDTiny (s) {
 function refID (s) {
     var n = nameIndexTable[s];
     if (n) {
