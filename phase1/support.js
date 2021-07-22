@@ -30,7 +30,7 @@ function newID (s) {
     return '';
 }
 
-function setID (s) {
+function fetchID (s) {
     scopeModify ('id', s);
     return '';
 }
