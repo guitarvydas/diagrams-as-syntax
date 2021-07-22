@@ -48,7 +48,7 @@ encodedChar [c] = [[${c}]]
 <p id="decoderstatus" > READY </p>
 
 
-
+<!----------------------------------------------------------->
 
 
 <!-- diagrams.net style expander -->
@@ -109,6 +109,7 @@ OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
 <!-- end diagrams.net style expander -->
 
 
+<!----------------------------------------------------------->
 
 
 
@@ -119,7 +120,9 @@ OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
 AppAttributeelider{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = alnum+ "=" string
+  Attribute = NameAttribute | OtherAttribute
+  NameAttribute = "name" "=" string
+  OtherAttribute = alnum+ "=" string
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
   encodedChar = ~"<" any		   
@@ -162,7 +165,9 @@ AppAttributeelider{
 <textarea id="attributeelidersemantics" rows="1" cols="90" placeholder="decode semantics" style="background-color:oldlace;">
 Diagrams [@ds] = [[${ds}]]
 Diagram [k @a k2 graphmodel k3] = [[${k}${a}${k2}\n${graphmodel}\n${k3}\n]]
-Attribute [@an k s] = [[\ ${an}${k}${s}]]
+Attribute [a] = [[${a}]]
+NameAttribute [an k s] = [[\ ${an}${k}${s}]]
+OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
 encodedChar [c] = [[${c}]]
@@ -202,6 +207,7 @@ quote [c] = [[${c}]]
 
 <!-- end diagrams.net attribute elider -->
 
+<!----------------------------------------------------------->
 
 
 
@@ -214,7 +220,9 @@ quote [c] = [[${c}]]
 Tofb1{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = alnum+ "=" string
+  Attribute = NameAttribute | OtherAttribute
+  NameAttribute = "name" "=" string
+  OtherAttribute = alnum+ "=" string
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
 
@@ -263,7 +271,9 @@ CellAttribute =     EllipseAttribute
 <textarea id="tofb1semantics" rows="1" cols="90" placeholder="tofb1 semantics" style="background-color:oldlace;">
 Diagrams [@ds] = [[${nameMangle (ds)}]]
 Diagram [k @a k2 graphmodel k3] = [[${graphmodel}]]
-Attribute [@an k s] = [[\ ${an}${k}${s}]]
+Attribute [a] = [[${a}]]
+NameAttribute [an k s] = [[\ ${an}${k}${s}]]
+OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
 
@@ -305,6 +315,7 @@ quote [c] = [[${c}]]
 
 <!-- end diagrams.net tofb1 -->
 
+<!----------------------------------------------------------->
 
 
 
@@ -315,7 +326,9 @@ quote [c] = [[${c}]]
 Tofb{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = alnum+ "=" string
+  Attribute = NameAttribute | OtherAttribute
+  NameAttribute = "name" "=" string
+  OtherAttribute = alnum+ "=" string
   string= "\"" notDQ* "\""
   unqstring= "\"" notDQ* "\""
   notDQ = ~"\"" any
@@ -373,7 +386,9 @@ Tofb{
 <textarea id="tofbsemantics" rows="1" cols="90" placeholder="tofb semantics" style="background-color:oldlace;">
 Diagrams [@ds] = [[${nameMangle (ds)}]]
 Diagram [k @a k2 graphmodel k3] = [[${graphmodel}]]
-Attribute [@an k s] = [[\ ${an}${k}${s}]]
+Attribute [a] = [[${a}]]
+NameAttribute [an k s] = [[\ ${an}${k}${s}]]
+OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 unqstring [q1 @cs q2] = [[${cs}]]
 notDQ [c] = [[${c}]]
