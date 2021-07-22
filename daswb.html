@@ -421,6 +421,13 @@ quote [c] = [[${c}]]
 
 <!-- end diagrams.net tofb -->
 
+<!-- sort -->
+<p>diagrams net sort</p>
+<textarea id="plsorted" rows="17" cols="90" placeholder="pl sorted"  readonly style="background-color:whitesmoke;">
+</textarea>
+<br>
+<!-- end sort -->
+
 
 
 
@@ -480,12 +487,20 @@ quote [c] = [[${c}]]
     run ('tofbgrammar', 'tofbsemantics', 'attributeelidertranspiled', 'tofbtranspiled', 'tofbstatus');
   }
   
+  function plsort () {
+    var fb = document.getElementById('tofbtranspiled').value;
+    var lines = fb.split ('\n');
+    lines.sort ();
+    document.getElementById ('plsorted').value = lines.join('\n');
+  }
+
   function generate () {
       decode ();
       styleexpandertranspile ();
       attributeEliderTranspile ();
       tofb1Transpile ();
       tofbTranspile ();
+      plsort ();
   }
 
   </script>
