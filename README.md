@@ -10,3 +10,23 @@ use swipl to combine the 3 diagrams into a single diagram (The App).
 
 see phase1/README.md
 see phase2/README.md
+
+facts produced by phase 1:
+```
+cell(id,"").
+contains(id1,id2).
+diagram(diagramid,"").
+edge(id,"").
+ellipse(id,"").
+fillColor(id,"red").
+height(id,nn).
+name(diagramid,"string").
+source(edgeid1,id2).
+target(edgeid1,id2).
+text(id,"").
+value(textid,"string").
+vertex(id,"").
+width(id,nn).
+x(id,nn).
+y(id,nn).
+```
