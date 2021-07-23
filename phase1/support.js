@@ -21,23 +21,61 @@ function nameMangle (s) {
 
 
 var nameIndexTable = [];
-var counter = 0;
+var counter = 1;
 
-function newID (s) {
-    scopeModify ('id', s);
+function resetNames () {
+    nameIndexTable = [];
+    counter = 1;
+}
+
+/// generic
+function newID (name, quoteds) {
+    var s = stripQuotes (quoteds);
+    scopeModify (name, s);
     nameIndexTable[s] = counter;
     counter += 1;
     return '';
 }
 
-function fetchID (s) {
-    scopeModify ('id', s);
+function pushID (name, s) {
+    scopeModify (name, stripQuotes (s));
     return '';
 }
 
-function getID () {
-    var s = scopeGet ('id');
+function getID (name) {
+    var s = scopeGet (name);
     return refID (s);
+}
+
+
+/// cells
+function newCellID (s) {
+    return newID ('cellid', s);
+}
+
+function pushCellID (s) {
+    return pushID ('cellid', s);
+}
+
+function getCellID () {
+    return getID ('cellid');
+}
+
+function refCellID (s) {
+    return refID (s);
+}
+
+/// diagrams
+function newDiagramID (s) {
+    return newID ('diagramid', s);
+}
+
+function pushDiagramID (s) {
+    return pushID ('diagramid', s);
+}
+
+function getDiagramID () {
+    return getID ('diagramid');
 }
 
 
@@ -57,3 +95,15 @@ function refID (s) {
 	return s;
     }
 }    
+
+
+function stripQuotes (s) {
+    return s;
+    //return s.replace (/"/g,"");
+}
+
+
+function setDiagram () {
+    var diagramID = getID ();
+    scopeAdd ('diagram', diagramID);
+}

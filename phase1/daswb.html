@@ -120,8 +120,9 @@ OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
 AppAttributeelider{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = NameAttribute | OtherAttribute
+  Attribute = NameAttribute | DiagramIDAttribute | OtherAttribute
   NameAttribute = "name" "=" string
+  DiagramIDAttribute = "id" "=" string
   OtherAttribute = alnum+ "=" string
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
@@ -167,6 +168,7 @@ Diagrams [@ds] = [[${ds}]]
 Diagram [k @a k2 graphmodel k3] = [[${k}${a}${k2}\n${graphmodel}\n${k3}\n]]
 Attribute [a] = [[${a}]]
 NameAttribute [an k s] = [[\ ${an}${k}${s}]]
+DiagramIDAttribute [an k s] = [[\ ${an}${k}${s}]]
 OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
@@ -214,14 +216,16 @@ quote [c] = [[${c}]]
 <!-- diagrams.net tofb passes 1 & 2 -->
 
 <!-- diagrams.net tofb1 -->
+<!-- collect cell and diagam names into a table -->
 
 <p>grok (tofb1):</p>
 <textarea id="tofb1grammar" name="a" rows="1" cols="90" placeholder="tofb1 grammar" style="background-color:oldlace;">
 Tofb1{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = NameAttribute | OtherAttribute
+  Attribute = NameAttribute | DiagramIDAttribute | OtherAttribute
   NameAttribute = "name" "=" string
+  DiagramIDAttribute = "id" "=" string
   OtherAttribute = alnum+ "=" string
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
@@ -269,17 +273,18 @@ CellAttribute =     EllipseAttribute
 
 <p>emit (tofb1):</p>
 <textarea id="tofb1semantics" rows="1" cols="90" placeholder="tofb1 semantics" style="background-color:oldlace;">
-Diagrams [@ds] = [[${nameMangle (ds)}]]
-Diagram [k @a k2 graphmodel k3] = [[${graphmodel}]]
+Diagrams [@ds] = {{ resetNames (); }}[[${nameMangle (ds)}]]
+Diagram [k @a k2 graphmodel k3] = {{ scopeAdd ('diagramid', '') }}[[${graphmodel}]]
 Attribute [a] = [[${a}]]
 NameAttribute [an k s] = [[\ ${an}${k}${s}]]
+DiagramIDAttribute [an k s] = [[\ ${an}${k}${s}${newDiagramID (s)}]]
 OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
 
 GraphModel [k1 @as k2 root k3] = [[${root}]]
 Root [k1 @cells k2] = [[${cells}]]
-Cell [c] = {{scopeAdd ('id', '');}}[[${c}]]
+Cell [c] = {{scopeAdd ('cellid', '');}}[[${c}]]
 CellWithoutContent [k1 @as k2] = [[${as}]]
 CellWithContent [k1 @as k2 @geometry k3] = [[${as}${geometry}]]
 Geometry [k1 @as k2] = [[${as}]]
@@ -291,7 +296,7 @@ KindAttribute [kind eq s] = [[]]
 ValueAttribute [v eq s] = [[]]
 SourceAttribute [v eq s] = [[]]
 TargetAttribute [v eq s] = [[]]
-IDAttribute [id eq s] = [[${newID(s)}]]
+IDAttribute [id eq s] = [[${newCellID(s)}]]
 EdgeAttribute [v eq q1 s q2] = [[]]
 VertexAttribute [v eq q1 s q2] = [[]]
 RedAttribute [id k q1 s q2] = [[]]
@@ -326,8 +331,9 @@ quote [c] = [[${c}]]
 Tofb{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = NameAttribute | OtherAttribute
+  Attribute = NameAttribute | DiagramIDAttribute | OtherAttribute
   NameAttribute = "name" "=" string
+  DiagramIDAttribute = "id" "=" string
   OtherAttribute = alnum+ "=" string
   string= "\"" notDQ* "\""
   unqstring= "\"" notDQ* "\""
@@ -385,9 +391,10 @@ Tofb{
 <p>emit (tofb):</p>
 <textarea id="tofbsemantics" rows="1" cols="90" placeholder="tofb semantics" style="background-color:oldlace;">
 Diagrams [@ds] = [[${nameMangle (ds)}]]
-Diagram [k @a k2 graphmodel k3] = [[${graphmodel}]]
+Diagram [k @a k2 graphmodel k3] = {{scopeAdd ('diagramid', 'yyy'); }}[[${a}${graphmodel}]]
 Attribute [a] = [[${a}]]
-NameAttribute [an k s] = [[\ ${an}${k}${s}]]
+NameAttribute [an k s] = [[name(${getDiagramID()}, ${s}).\n]]
+DiagramIDAttribute [an k s] = [[${pushDiagramID (s)}diagram(${getDiagramID()}, "").\n]]
 OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 unqstring [q1 @cs q2] = [[${cs}]]
@@ -395,32 +402,32 @@ notDQ [c] = [[${c}]]
 
 GraphModel [k1 @as k2 root k3] = [[${root}]]
 Root [k1 @cells k2] = [[${cells}]]
-Cell [c] = {{scopeAdd ('id', '');}}[[cell(${getID()},"").\n${c}]]
+Cell [c] = {{scopeAdd ('cellid', 'zzz');}}[[cell(${getCellID()},"").\ncontains(${getDiagramID()}, ${getCellID()}).\n${c}]]
 CellWithoutContent [k1 @as k2] = [[${as}]]
 CellWithContent [k1 @as k2 @geometry k3] = [[${as}${geometry}]]
 Geometry [k1 @as k2] = [[${as}]]
 
 CellAttribute [a] = [[${a}]]
-EllipseAttribute [kind eq q1 s q2] = [[ellipse(${getID()}, "").\n]]
-TextAttribute [kind eq q1 s q2] = [[text(${getID()}, "").\n]]
-KindAttribute [kind eq s] = [[kind(${getID()}, ${s}).\n]]
-ValueAttribute [v eq s] = [[value(${getID ()}, ${s}).\n]]
-SourceAttribute [v eq s] = [[source(${getID ()}, ${refID(s)}).\n]]
-TargetAttribute [v eq s] = [[target(${getID ()}, ${refID(s)}).\n]]
-IDAttribute [id eq s] = [[${fetchID (s)}]]
-EdgeAttribute [v eq q1 s q2] = [[edge(${getID()}, "").\n]]
-VertexAttribute [v eq q1 s q2] = [[vertex(${getID()}, "").\n]]
-RedAttribute [id k q1 s q2] = [[fillColor(${getID()}, "red").\n]]
+EllipseAttribute [kind eq q1 s q2] = [[ellipse(${getCellID()}, "").\n]]
+TextAttribute [kind eq q1 s q2] = [[text(${getCellID()}, "").\n]]
+KindAttribute [kind eq s] = [[kind(${getCellID()}, ${s}).\n]]
+ValueAttribute [v eq s] = [[value(${getCellID ()}, ${s}).\n]]
+SourceAttribute [v eq s] = [[source(${getCellID ()}, ${refCellID(stripQuotes (s))}).\n]]
+TargetAttribute [v eq s] = [[target(${getCellID ()}, ${refCellID(stripQuotes (s))}).\n]]
+IDAttribute [id eq s] = [[${pushCellID (s)}]]
+EdgeAttribute [v eq q1 s q2] = [[edge(${getCellID()}, "").\n]]
+VertexAttribute [v eq q1 s q2] = [[vertex(${getCellID()}, "").\n]]
+RedAttribute [id k q1 s q2] = [[fillColor(${getCellID()}, "red").\n]]
 OtherCellAttribute [@an k s] = [[]]
 
 GAttribute [a] = [[${a}]]
 ASGAttribute [kas k s] = [[]]
 RelativeGAttribute [r k s] = [[]]
-xGAttribute [an k s] = [[${an}(${getID()}, ${s}).\n]]
-yGAttribute [an k s] = [[${an}(${getID()}, ${s}).\n]]
-widthGAttribute [an k s] = [[${an}(${getID()}, ${s}).\n]]
-heightGAttribute [an k s] = [[${an}(${getID()}, ${s}).\n]]
-OtherGAttribute [@an k s] = [[${an}(${getID()}, ${s}).\n]]
+xGAttribute [an k s] = [[${an}(${getCellID()}, ${s}).\n]]
+yGAttribute [an k s] = [[${an}(${getCellID()}, ${s}).\n]]
+widthGAttribute [an k s] = [[${an}(${getCellID()}, ${s}).\n]]
+heightGAttribute [an k s] = [[${an}(${getCellID()}, ${s}).\n]]
+OtherGAttribute [@an k s] = [[${an}(${getCellID()}, ${s}).\n]]
 
 quote [c] = [[${c}]]
 </textarea>

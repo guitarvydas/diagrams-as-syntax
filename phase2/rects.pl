@@ -16,7 +16,7 @@ root(id1,_).
     
 drawing("0",_).
     
-writeRect(X,_):-format('rect(~w).~n',[X]). 
+writeRect(X,_):-format('rect(~w,"").~n',[X]). 
 
 listRects(S):-
     setof(R,rect(R,_),S).
