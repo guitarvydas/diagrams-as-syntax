@@ -5,4 +5,8 @@ cp ../phase1/out.pl fb.pl
 #  is a good way to ensure this.
 #  In this case, rects.bash print out only "rect(...)" facts and they will be
 #  contiguous, so, it is enough to simply append them to fb.pl.
+./bb.bash >>fb.pl
+
+sort fb.pl >temp
+mv temp fb.pl
 

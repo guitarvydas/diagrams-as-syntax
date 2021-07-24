@@ -80,14 +80,18 @@ function getDiagramID () {
 
 
 
-function refIDfat (s) {
-//function refID (s) {
-    // use refIDTiny to produce smaller ID's (useful for debugging workbench)
-    return "id" + s.replace(/"/g,"");
-}
+// //function refIDFat (s) {
+// function refID (s) {
+//     return "id_" + reallyStripQuotes(s);
+// }
 
-//function refIDTiny (s) {
+// function refIDTiny (s) {
+//     return "id" + s.replace(/"/g,"");
+// }
+
+// function refIDBoth (s) {
 function refID (s) {
+    // use refIDTiny to produce smaller ID's (useful for debugging workbench)
     var n = nameIndexTable[s];
     if (n) {
 	return "id" + n.toString();
@@ -99,7 +103,11 @@ function refID (s) {
 
 function stripQuotes (s) {
     return s;
-    //return s.replace (/"/g,"");
+    //return reallyStringQuotes(s);
+}
+
+function reallyStripQuotes (s) {
+    return s.replace (/"/g,"");
 }
 
 

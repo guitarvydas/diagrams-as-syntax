@@ -1,4 +1,72 @@
 
+bbb(id11,205).
+bbb(id12,200).
+bbb(id16,180).
+bbb(id17,145).
+bbb(id19,125).
+bbb(id20,125).
+bbb(id21,125).
+bbb(id23,125).
+bbb(id27,190).
+bbb(id28,155).
+bbb(id29,152.5).
+bbb(id30,152.5).
+bbb(id4,290).
+bbb(id5,260).
+bbb(id6,205).
+bbb(id8,205).
+bbb(id9,205).
+bbl(id11,474).
+bbl(id12,310).
+bbl(id16,95).
+bbl(id17,180).
+bbl(id19,80).
+bbl(id20,395).
+bbl(id21,165).
+bbl(id23,315).
+bbl(id27,119).
+bbl(id28,190.5).
+bbl(id29,111.5).
+bbl(id30,405.5).
+bbl(id4,120).
+bbl(id5,180).
+bbl(id6,540).
+bbl(id8,110).
+bbl(id9,174).
+bbr(id11,504).
+bbr(id12,350).
+bbr(id16,415).
+bbr(id17,330).
+bbr(id19,110).
+bbr(id20,425).
+bbr(id21,195).
+bbr(id23,345).
+bbr(id27,428).
+bbr(id28,359.5).
+bbr(id29,141.5).
+bbr(id30,435.5).
+bbr(id4,560).
+bbr(id5,500).
+bbr(id6,570).
+bbr(id8,140).
+bbr(id9,204).
+bbt(id11,175).
+bbt(id12,180).
+bbt(id16,40).
+bbt(id17,75).
+bbt(id19,95).
+bbt(id20,95).
+bbt(id21,95).
+bbt(id23,95).
+bbt(id27,80).
+bbt(id28,120).
+bbt(id29,122.5).
+bbt(id30,122.5).
+bbt(id4,80).
+bbt(id5,120).
+bbt(id6,175).
+bbt(id8,175).
+bbt(id9,175).
 cell(id10,"").
 cell(id11,"").
 cell(id12,"").
@@ -91,6 +159,18 @@ height(id9, 30).
 name(id1, "hwapp").
 name(id13, "hwsub").
 name(id24, "hwhello").
+rect(id14,"").
+rect(id15,"").
+rect(id16,"").
+rect(id17,"").
+rect(id2,"").
+rect(id25,"").
+rect(id26,"").
+rect(id27,"").
+rect(id28,"").
+rect(id3,"").
+rect(id4,"").
+rect(id5,"").
 source(id10, id11).
 source(id18, id19).
 source(id22, id23).
@@ -185,15 +265,3 @@ y(id5, 120).
 y(id6, 175).
 y(id8, 175).
 y(id9, 175).
-rect(id14,"").
-rect(id15,"").
-rect(id16,"").
-rect(id17,"").
-rect(id2,"").
-rect(id25,"").
-rect(id26,"").
-rect(id27,"").
-rect(id28,"").
-rect(id3,"").
-rect(id4,"").
-rect(id5,"").
