@@ -1,0 +1,10 @@
+#!/bin/bash
+./run.bash
+
+swipl \
+      -g 'consult(fb).' \
+      -g 'consult(designRuleRectanglesMustNotIntersect).' \
+      -g 'designRuleRectanglesMustNotIntersect(id16,id17).' \
+      -g 'halt.'
+
+# -g 'designRuleRectanglesMustNotIntersect(id16,id16).' \
