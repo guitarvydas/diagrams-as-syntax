@@ -33,3 +33,26 @@ Design Rule
   end if
 end Design Rule
   
+-------------- 
+ 
+see containment.drawio
+
+C is inside B
+B is inside A
+C is inside A
+
+F is inside E
+E is inside D
+F is inside D
+
+G is inside D
+H is inside G
+H is inside G
+
+desired result:
+A contains B
+B contains C
+D contains E
+D contains G
+E contains F
+G contains H
