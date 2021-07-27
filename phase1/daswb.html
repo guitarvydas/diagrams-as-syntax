@@ -8,7 +8,7 @@ textarea {
 </head>
 <body>
 
-<h1>DaS Transpiler Workbench (app.diagrams.net to xvg to ...)</h1>
+<h1>DaS Transpiler Workbench</h1>
 
 <p>grok (decoder):</p>
 <textarea id="decodergrammar" name="a" rows="1" cols="90" placeholder="decoder grammar" style="background-color:oldlace;">
@@ -17,10 +17,12 @@ TabbedDiagrams = Header Diagram+ Trailer
 Header = "<" "mxfile" encodedChar+
 Trailer = "</mxfile>"
 Diagram = "<diagram" Attribute* ">" encodedChar+ "</diagram>"
-Attribute = alnum+ "=" string
+Attribute = alnum+ "=" attributeValue
 string= "\"" notDQ* "\""
 notDQ = ~"\"" any
 encodedChar = ~"<" any		   
+attributeValue = number | string
+number = digit+
 }
 </textarea>
 
@@ -34,6 +36,8 @@ Attribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
 encodedChar [c] = [[${c}]]
+attributeValue[x] = [[${x}]]
+number [n] = [[${n}]]
 </textarea>
 
 <p>source (diagrams.net raw):</p>
@@ -58,7 +62,7 @@ encodedChar [c] = [[${c}]]
 AppStyleexpander{
   Diagrams = Diagram+
   Diagram = "<diagram" Attribute* ">" GraphModel "</diagram>"
-  Attribute = alnum+ "=" string
+  Attribute = alnum+ "=" attributeValue
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
   encodedChar = ~"<" any		   
@@ -71,7 +75,11 @@ AppStyleexpander{
   Geometry = "<mxGeometry" Attribute+ "/>"
   CellAttribute = StyleAttribute | OtherCellAttribute
   StyleAttribute = "style" "=" string
-  OtherCellAttribute = alnum+ "=" string
+  OtherCellAttribute = alnum+ "=" attributeValue
+
+  attributeValue = number | string
+  number = digit+
+
 }
 
 </textarea>
@@ -95,6 +103,9 @@ Geometry [k1 @as k2] = [[${k1}${as}${k2}]]
 CellAttribute [a] = [[\ ${a}]]
 StyleAttribute [id k s] = [[\ ${expandStyle(s)}]]
 OtherCellAttribute [@an k s] = [[\ ${an}${k}${s}]]
+
+attributeValue [x] = [[${x}]]
+number [n] = [[${n}]]
 
 </textarea>
 
@@ -123,10 +134,12 @@ AppAttributeelider{
   Attribute = NameAttribute | DiagramIDAttribute | OtherAttribute
   NameAttribute = "name" "=" string
   DiagramIDAttribute = "id" "=" string
-  OtherAttribute = alnum+ "=" string
+  OtherAttribute = alnum+ "=" attributeValue
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
-  encodedChar = ~"<" any		   
+  encodedChar = ~"<" any
+  attributeValue = number | string		  
+  number = digit+
 
   GraphModel = "<mxGraphModel" Attribute+ ">" Root "</mxGraphModel>" 
   Root = "<root>" Cell+ "</root>"
@@ -151,11 +164,11 @@ AppAttributeelider{
   EdgeAttribute = "edge" "=" quote "1" quote
   VertexAttribute = "vertex" "=" quote "1" quote
   RedAttribute = "fillColor" "=" quote "#f8cecc" quote
-  OtherCellAttribute = alnum+ "=" string
+  OtherCellAttribute = alnum+ "=" attributeValue
 
   GAttribute = 
                 OtherGAttribute 
-  OtherGAttribute = alnum+ "=" string
+  OtherGAttribute = alnum+ "=" attributeValue
 
   quote = "\""
 }
@@ -173,6 +186,8 @@ OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
 encodedChar [c] = [[${c}]]
+attributeValue [x] = [[${x}]]
+number [n] = [[${n}]]
 
 GraphModel [k1 @as k2 root k3] = [[${k1}${as}${k2}${root}${k3}]]
 Root [k1 @cells k2] = [[${k1}${cells}${k2}]]
@@ -226,9 +241,11 @@ Tofb1{
   Attribute = NameAttribute | DiagramIDAttribute | OtherAttribute
   NameAttribute = "name" "=" string
   DiagramIDAttribute = "id" "=" string
-  OtherAttribute = alnum+ "=" string
+  OtherAttribute = alnum+ "=" attributeValue
   string= "\"" notDQ* "\""
   notDQ = ~"\"" any
+  attributeValue = number | string
+  number = digit+
 
   GraphModel = "<mxGraphModel" Attribute+ ">" Root "</mxGraphModel>" 
   Root = "<root>" Cell+ "</root>"
@@ -257,14 +274,14 @@ CellAttribute =     EllipseAttribute
   EdgeAttribute = "edge" "=" quote "1" quote
   VertexAttribute = "vertex" "=" quote "1" quote
   RedAttribute = "fillColor" "=" quote "red" quote
-  OtherCellAttribute = alnum+ "=" string
+  OtherCellAttribute = alnum+ "=" attributeValue
 
   GAttribute =   ASGAttribute
                | RelativeGAttribute 
                | OtherGAttribute 
   ASGAttribute = "as" "=" string
   RelativeGAttribute = "relative" "=" string
-  OtherGAttribute = alnum+ "=" string
+  OtherGAttribute = alnum+ "=" attributeValue
 
   quote = "\""
 }
@@ -281,6 +298,8 @@ DiagramIDAttribute [an k s] = [[${newDiagramID (s)}\n${getDiagramID()}\t\t${s}\n
 OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 notDQ [c] = [[${c}]]
+attributeValue [x] = [[${x}]]
+number [n] = [[${n}]]
 
 GraphModel [k1 @as k2 root k3] = [[${root}]]
 Root [k1 @cells k2] = [[${cells}]]
@@ -334,10 +353,12 @@ Tofb{
   Attribute = NameAttribute | DiagramIDAttribute | OtherAttribute
   NameAttribute = "name" "=" string
   DiagramIDAttribute = "id" "=" string
-  OtherAttribute = alnum+ "=" string
+  OtherAttribute = alnum+ "=" attributeValue
   string= "\"" notDQ* "\""
   unqstring= "\"" notDQ* "\""
   notDQ = ~"\"" any
+  attributeValue = number | string
+  number = digit+
 
   GraphModel = "<mxGraphModel" Attribute+ ">" Root "</mxGraphModel>" 
   Root = "<root>" Cell+ "</root>"
@@ -366,7 +387,7 @@ Tofb{
   EdgeAttribute = "edge" "=" quote "1" quote
   VertexAttribute = "vertex" "=" quote "1" quote
   RedAttribute = "fillColor" "=" quote "red" quote
-  OtherCellAttribute = alnum+ "=" string
+  OtherCellAttribute = alnum+ "=" attributeValue
 
   GAttribute =   ASGAttribute
                | RelativeGAttribute 
@@ -381,7 +402,7 @@ Tofb{
   yGAttribute = "y" "=" unqstring
   widthGAttribute = "width" "=" unqstring
   heightGAttribute = "height" "=" unqstring
-  OtherGAttribute = alnum+ "=" string
+  OtherGAttribute = alnum+ "=" attributeValue
 
   quote = "\""
 }
@@ -399,6 +420,8 @@ OtherAttribute [@an k s] = [[\ ${an}${k}${s}]]
 string [q1 @cs q2] = [[${q1}${cs}${q2}]]
 unqstring [q1 @cs q2] = [[${cs}]]
 notDQ [c] = [[${c}]]
+attributeValue [x] = [[${x}]]
+number [n] = [[${n}]]
 
 GraphModel [k1 @as k2 root k3] = [[${root}]]
 Root [k1 @cells k2] = [[${cells}]]
