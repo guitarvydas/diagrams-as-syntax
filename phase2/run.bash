@@ -1,12 +1,22 @@
 #!/bin/bash
+clear
+set -e
+trap 'catch' ERR
+
+catch () {
+    echo '*** fatal error in run.bash'
+    exit 1
+}
+
 cp ../phase1/out.pl fb.pl
-./rects.bash >>fb.pl
-# N.B. PROLOG requires that facts of the same name be adjacent.  UNIX 'sort'
-#  is a good way to ensure this.
-#  In this case, rects.bash print out only "rect(...)" facts and they will be
-#  contiguous, so, it is enough to simply append them to fb.pl.
-./bb.bash >>fb.pl
 
-sort fb.pl >temp
-mv temp fb.pl
+#######
 
+# drawing agnostic operations
+
+./rects.bash | ./augment-fb
+
+./bb.bash | ./augment-fb
+
+
+#######
