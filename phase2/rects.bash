@@ -1,6 +1,6 @@
 #!/bin/bash
 swipl -q \
-      -g 'consult("../phase1/out.pl")' \
+      -g 'consult(fb)' \
       -g 'consult(rects)' \
       -g 'printRects.' \
       -g 'halt'

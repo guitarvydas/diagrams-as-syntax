@@ -6,12 +6,12 @@ makebb(CellID):-
     y(CellID,Y),
     width(CellID,Width),
     height(CellID,Height),
-    format("bbl(~w,~w).~n",[CellID,X]),
-    format("bbt(~w,~w).~n",[CellID,Y]),
+    format("l(~w,~w).~n",[CellID,X]),
+    format("t(~w,~w).~n",[CellID,Y]),
     R is X + Width,
-    format("bbr(~w,~w).~n",[CellID,R]),
+    format("r(~w,~w).~n",[CellID,R]),
     Bottom is Y + Height,
-    format("bbb(~w,~w).~n",[CellID,Bottom]).
+    format("b(~w,~w).~n",[CellID,Bottom]).
 
 printBB:-
     bagof(C,makebb(C),_).
