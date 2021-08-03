@@ -10,18 +10,46 @@ catch () {
 
 cp ../phase2/fb.pl fb.pl
 
-#######
+temp=_temp_$RANDOM
+temp2=_temp2_$RANDOM
+allContains1 ()
+    {
+        swipl -g 'consult(fb).' \
+	      -g 'consult(onSameDiagram).' \
+	      -g 'consult(contain1).' \
+              -g 'allContains1.' \
+	      -g 'halt.' \
+	      >${temp}
+       cat ${temp} fb.pl >${temp2}
+       sort ${temp2} >fb.pl
+    }
 
-# drawing specific operations
+printAllDeepContains ()
+    {
+        swipl -g 'consult(fb).' \
+	      -g 'consult(onSameDiagram).' \
+              -g 'consult(contain2).' \
+	      -g 'printAllDeepContains.' \
+	      -g 'halt.' \
+	      >${temp}
+       cat ${temp} fb.pl >${temp2}	      
+       sort ${temp2} >fb.pl
+    }
 
-./rundesignrulerectanglesmustnotintersectonthesamediagram.bash
+printAllDirectContains ()
+    {
+        swipl -g 'consult(fb).' \
+	      -g 'consult(onSameDiagram).' \
+              -g 'consult(contain3).' \
+	      -g 'printAllDirectContains.' \
+	      -g 'halt.' \
+	      >${temp}
+       cat ${temp} fb.pl >${temp2}	      
+       sort ${temp2} >fb.pl
+    }
 
-# contains on same drawing
-./runcontains1.bash | ./augment-fb.bash
-./rundeepcontains.bash | ./augment-fb.bash
-./runcontains3.bash | ./augment-fb.bash
+allContains1
+printAllDeepContains
+printAllDirectContains
 
-# ports on same drawing
-# connections on same drawing
-
-#######
+rm -f ${temp} ${temp2}
