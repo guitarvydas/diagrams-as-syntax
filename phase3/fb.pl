@@ -93,7 +93,17 @@ ellipse(id30, "").
 ellipse(id6, "").
 ellipse(id8, "").
 ellipse(id9, "").
+fillColor(id11, "yellow").
+fillColor(id19, "green").
+fillColor(id20, "yellow").
+fillColor(id21, "green").
+fillColor(id23, "yellow").
 fillColor(id27, "red").
+fillColor(id29, "green").
+fillColor(id30, "yellow").
+fillColor(id6, "yellow").
+fillColor(id8, "green").
+fillColor(id9, "green").
 height(id11, 30).
 height(id12, 20).
 height(id16, 140).
@@ -131,6 +141,16 @@ l(id9,174).
 name(id1, "hwapp").
 name(id13, "hwsub").
 name(id24, "hwhello").
+portdirection(id11,output).
+portdirection(id19,input).
+portdirection(id20,output).
+portdirection(id21,input).
+portdirection(id23,output).
+portdirection(id29,input).
+portdirection(id30,output).
+portdirection(id6,output).
+portdirection(id8,input).
+portdirection(id9,input).
 r(id11,504).
 r(id12,350).
 r(id16,415).

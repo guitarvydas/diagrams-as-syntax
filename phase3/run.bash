@@ -26,9 +26,16 @@ swipl -g 'consult(fb).'  -g 'consult(onSameDiagram).' -g 'consult(contain3).' -g
 designRuleRectanglesMustNotIntersectOnTheSameDiagram (){
 swipl -g 'consult(fb).'  -g 'consult(onSameDiagram).' -g 'consult(designRuleRectanglesMustNotIntersect).' -g 'designRuleRectanglesMustNotIntersectOnTheSameDiagram.' -g 'halt.' | ./check-design-rule.bash 
 }
+printAllPortContains (){
+swipl -g 'consult(fb).'  -g 'consult(onSameDiagram).' -g 'consult(containsport).' -g 'printAllPortContains.' -g 'halt.' | ./augment-fb.bash 
+}
+printAllDirections (){
+swipl -g 'consult(fb).'  -g 'consult(onSameDiagram).' -g 'consult(portdirection).' -g 'printAllDirections.' -g 'halt.' | ./augment-fb.bash 
+}
 #_fb pipeline_
 setup
 allContains1
 printAllDeepContains
 printAllDirectContains
 designRuleRectanglesMustNotIntersectOnTheSameDiagram
+printAllDirections

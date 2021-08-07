@@ -6,6 +6,7 @@
 	printAllDeepContains
 	printAllDirectContains
 	designRuleRectanglesMustNotIntersectOnTheSameDiagram
+    printAllDirections
 
 
 
@@ -32,3 +33,13 @@
 	load onSameDiagram
 	load designRuleRectanglesMustNotIntersect
     check designRuleRectanglesMustNotIntersectOnTheSameDiagram
+### printAllPortContains
+	load fb
+	load onSameDiagram
+	load containsport
+    exec printAllPortContains
+### printAllDirections
+	load fb
+	load onSameDiagram
+	load portdirection
+    exec printAllDirections

@@ -154,6 +154,8 @@ AppAttributeelider{
 		  | SourceAttribute
 		  | TargetAttribute
 		  | IDAttribute
+		  | GreenAttribute
+		  | YellowAttribute
 		  | RedAttribute
 		  | OtherCellAttribute
   KindAttribute = "kind" "=" string
@@ -163,6 +165,8 @@ AppAttributeelider{
   IDAttribute = "id" "=" string
   EdgeAttribute = "edge" "=" quote "1" quote
   VertexAttribute = "vertex" "=" quote "1" quote
+  GreenAttribute = "fillColor" "=" quote "#d5e8d4" quote
+  YellowAttribute = "fillColor" "=" quote "#fff2cc" quote
   RedAttribute = "fillColor" "=" quote "#f8cecc" quote
   OtherCellAttribute = alnum+ "=" attributeValue
 
@@ -204,6 +208,8 @@ TargetAttribute [v eq s] = [[\ ${v}${eq}${s}]]
 IDAttribute [v eq s] = [[\ ${v}${eq}${s}]]
 EdgeAttribute [v eq q1 s q2] = [[\ ${v}${eq}${q1}${s}${q2}]]
 VertexAttribute [v eq q1 s q2] = [[\ ${v}${eq}${q1}${s}${q2}]]
+GreenAttribute [id k q1 s q2] = [[\ fillColor="green"]]
+YellowAttribute [id k q1 s q2] = [[\ fillColor="yellow"]]
 RedAttribute [id k q1 s q2] = [[\ fillColor="red"]]
 OtherCellAttribute [@an k s] = [[]]
 
@@ -262,6 +268,8 @@ CellAttribute =     EllipseAttribute
 		  | SourceAttribute
 		  | TargetAttribute
 		  | IDAttribute
+		  | GreenAttribute
+		  | YellowAttribute
 		  | RedAttribute
 		  | OtherCellAttribute
   EllipseAttribute = "kind" "=" quote "ellipse" quote
@@ -274,6 +282,8 @@ CellAttribute =     EllipseAttribute
   EdgeAttribute = "edge" "=" quote "1" quote
   VertexAttribute = "vertex" "=" quote "1" quote
   RedAttribute = "fillColor" "=" quote "red" quote
+  GreenAttribute = "fillColor" "=" quote "green" quote
+  YellowAttribute = "fillColor" "=" quote "yellow" quote
   OtherCellAttribute = alnum+ "=" attributeValue
 
   GAttribute =   ASGAttribute
@@ -319,6 +329,8 @@ IDAttribute [id eq s] = [[${newCellID(s)}${getCellID()}\t\t${s}\n]]
 EdgeAttribute [v eq q1 s q2] = [[]]
 VertexAttribute [v eq q1 s q2] = [[]]
 RedAttribute [id k q1 s q2] = [[]]
+GreenAttribute [id k q1 s q2] = [[]]
+YellowAttribute [id k q1 s q2] = [[]]
 OtherCellAttribute [@an k s] = [[]]
 
 GAttribute [a] = [[${a}]]
@@ -376,6 +388,8 @@ Tofb{
 		  | TargetAttribute
 		  | IDAttribute
 		  | RedAttribute
+		  | GreenAttribute
+		  | YellowAttribute
 		  | OtherCellAttribute
   EllipseAttribute = "kind" "=" quote "ellipse" quote
   TextAttribute = "kind" "=" quote "text" quote
@@ -387,6 +401,8 @@ Tofb{
   EdgeAttribute = "edge" "=" quote "1" quote
   VertexAttribute = "vertex" "=" quote "1" quote
   RedAttribute = "fillColor" "=" quote "red" quote
+  GreenAttribute = "fillColor" "=" quote "green" quote
+  YellowAttribute = "fillColor" "=" quote "yellow" quote
   OtherCellAttribute = alnum+ "=" attributeValue
 
   GAttribute =   ASGAttribute
@@ -440,6 +456,8 @@ TargetAttribute [v eq s] = [[target(${getCellID ()}, ${refCellID(stripQuotes (s)
 IDAttribute [id eq s] = [[${pushCellID (s)}]]
 EdgeAttribute [v eq q1 s q2] = [[edge(${getCellID()}, "").\n]]
 VertexAttribute [v eq q1 s q2] = [[vertex(${getCellID()}, "").\n]]
+GreenAttribute [id k q1 s q2] = [[fillColor(${getCellID()}, "green").\n]]
+YellowAttribute [id k q1 s q2] = [[fillColor(${getCellID()}, "yellow").\n]]
 RedAttribute [id k q1 s q2] = [[fillColor(${getCellID()}, "red").\n]]
 OtherCellAttribute [@an k s] = [[]]
 
