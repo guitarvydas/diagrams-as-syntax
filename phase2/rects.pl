@@ -1,4 +1,7 @@
 % every cell that is not a {ellipse,edge,text} must be a rect
+:- dynamic ellipse/2.
+:- dynamic text/2.
+:- dynamic edge/2.
 
 rect(X,_):-
     cell(X,_),
