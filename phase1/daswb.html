@@ -153,7 +153,9 @@ AppAttributeelider{
   Cell = CellWithContent | CellWithoutContent
   CellWithoutContent = "<mxCell" CellAttribute+ "/>"
   CellWithContent = "<mxCell" CellAttribute+ ">" Geometry? "</mxCell>"	     
-  Geometry = "<mxGeometry" GAttribute+ "/>"
+  Geometry = GeometryWithoutContent | GeometryWithContent
+  GeometryWithoutContent = "<mxGeometry" GAttribute+ "/>"
+  GeometryWithContent = "<mxGeometry" GAttribute+ ">" ignore+ "</mxGeometry>"
   CellAttribute =   KindAttribute 
                   | ValueAttribute 
 		  | EdgeAttribute
@@ -182,6 +184,8 @@ AppAttributeelider{
   OtherGAttribute = alnum+ "=" attributeValue
 
   quote = "\""
+
+  ignore = ~"</mxGeometry>" any
 }
 
 </textarea>
@@ -205,7 +209,9 @@ Root [k1 @cells k2] = [[${k1}${cells}${k2}]]
 Cell [c] = [[${c}]]
 CellWithoutContent [k1 @as k2] = [[${k1}${as}${k2}]]
 CellWithContent [k1 @as k2 @geometry k3] = [[${k1}${as}${k2}${geometry}${k3}]]
-Geometry [k1 @as k2] = [[${k1}${as}${k2}]]
+Geometry [g] = [[${g}]]
+GeometryWithoutContent [k1 @as k2] = [[${k1}${as}${k2}]]
+GeometryWithContent [k1 @as k2 @ignore k3] = [[${k1}${as}${k2}${ignore}${k3}]]
 
 CellAttribute [a] = [[${a}]]
 KindAttribute [kind eq s] = [[\ ${kind}${eq}${s}]]
@@ -265,7 +271,9 @@ Tofb1{
   Cell = CellWithContent | CellWithoutContent
   CellWithoutContent = "<mxCell" CellAttribute+ "/>"
   CellWithContent = "<mxCell" CellAttribute+ ">" Geometry? "</mxCell>"	     
-  Geometry = "<mxGeometry" GAttribute+ "/>"
+  Geometry = GeometryWithoutContent | GeometryWithContent
+  GeometryWithoutContent = "<mxGeometry" GAttribute+ "/>"
+  GeometryWithContent = "<mxGeometry" GAttribute+ ">" ignore+ "</mxGeometry>"
 CellAttribute =     EllipseAttribute
                   | TextAttribute 
                   | KindAttribute 
@@ -301,6 +309,8 @@ CellAttribute =     EllipseAttribute
   OtherGAttribute = alnum+ "=" attributeValue
 
   quote = "\""
+
+  ignore = ~"</mxGeometry>" any
 }
 
 </textarea>
@@ -323,7 +333,9 @@ Root [k1 @cells k2] = [[${cells}]]
 Cell [c] = {{scopeAdd ('cellid', '');}}[[${c}]]
 CellWithoutContent [k1 @as k2] = [[${as}]]
 CellWithContent [k1 @as k2 @geometry k3] = [[${as}${geometry}]]
-Geometry [k1 @as k2] = [[${as}]]
+Geometry [g] = [[${g}]]
+GeometryWithoutContent [k1 @as k2] = [[${as}]]
+GeometryWithContent [k1 @as k2 @ignore k3] = [[${as}]]
 
 CellAttribute [a] = [[${a}]]
 EllipseAttribute [kind eq q1 s q2] = [[]]
@@ -384,7 +396,9 @@ Tofb{
   Cell = CellWithContent | CellWithoutContent
   CellWithoutContent = "<mxCell" CellAttribute+ "/>"
   CellWithContent = "<mxCell" CellAttribute+ ">" Geometry? "</mxCell>"	     
-  Geometry = "<mxGeometry" GAttribute+ "/>"
+  Geometry = GeometryWithoutContent | GeometryWithContent
+  GeometryWithoutContent = "<mxGeometry" GAttribute+ "/>"
+  GeometryWithContent = "<mxGeometry" GAttribute+ ">" ignore+ "</mxGeometry>"
   CellAttribute =   EllipseAttribute
                   | TextAttribute 
                   | KindAttribute 
@@ -428,6 +442,8 @@ Tofb{
   OtherGAttribute = alnum+ "=" attributeValue
 
   quote = "\""
+
+  ignore = ~"</mxGeometry>" any
 }
 
 </textarea>
@@ -451,7 +467,9 @@ Root [k1 @cells k2] = [[${cells}]]
 Cell [c] = {{scopeAdd ('cellid', 'zzz');}}[[cell(${getCellID()},"").\ndiagramContains(${getDiagramID()}, ${getCellID()}).\n${c}]]
 CellWithoutContent [k1 @as k2] = [[${as}]]
 CellWithContent [k1 @as k2 @geometry k3] = [[${as}${geometry}]]
-Geometry [k1 @as k2] = [[${as}]]
+Geometry [g] = [[${g}]]
+GeometryWithoutContent [k1 @as k2] = [[${as}]]
+GeometryWithContent [k1 @as k2 @ignore k3] = [[${as}]]
 
 CellAttribute [a] = [[${a}]]
 EllipseAttribute [kind eq q1 s q2] = [[ellipse(${getCellID()}, "").\n]]
