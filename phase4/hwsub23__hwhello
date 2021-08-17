@@ -1,0 +1,6 @@
+#!/bin/bash
+# hwsub23__hwhello
+# inputs: 3 ("in"): <line of characters>
+# outputs: 4 ("out"): <line of characters>
+BIN=.
+cat - </dev/fd/3 >/dev/fd/4
