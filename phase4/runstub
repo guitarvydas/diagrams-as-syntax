@@ -1,3 +1,4 @@
 #!/bin/bash
+gcc -o stub stub.c
 ./stub 4>xyz
 # file xyz should contain output
