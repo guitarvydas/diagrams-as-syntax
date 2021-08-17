@@ -1,0 +1,3 @@
+#!/bin/bash
+./stub 4>xyz
+# file xyz should contain output
