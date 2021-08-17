@@ -2,6 +2,22 @@
 pipes 4
 
 fork
+krof
+
+fork
+krof
+
+fork
+# /dev/fd/4 for output
+push 1
+push 2
+dup 4
+# /dev/fd/3 for input
+push 0
+push 2
+dup 4
+krof
+
 
 #fork
 #push 1  write end of pipe
