@@ -5,4 +5,5 @@
 BIN=.
 port_in=/dev/fd/3
 port_out=/dev/fd/4
-${BIN}/hwapp123__hwsub23.bash 3<${port_in} 4>${port_out} &
+#${BIN}/hwapp123__hwsub23.bash 3<${port_in} 4>${port_out} &
+grash hwapp123__hwsub23.gsh 3<${port_in} 4>${port_out} &
