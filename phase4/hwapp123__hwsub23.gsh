@@ -9,5 +9,5 @@ dup 3
 push 1
 push 0
 dup 4
-exec echo hello from gsh file, pt
+exec grash hwsub23__hwhello.gsh
 krof
