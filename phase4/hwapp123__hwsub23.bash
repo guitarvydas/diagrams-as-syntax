@@ -5,5 +5,4 @@
 BIN=.
 A=/dev/fd/3
 B=/dev/fd/4
-#${BIN}/hwsub23__hwhello 3<${A} 4>${B} &
 grash hwsub23__hwhello.gsh 3<${A} 4>${B} &
