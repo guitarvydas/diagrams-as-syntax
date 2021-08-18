@@ -1,6 +1,5 @@
 fork
-push 1
 push 4
-redir
+redir 1
 exec echo hello from stub
 krof
