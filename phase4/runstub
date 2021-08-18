@@ -1,4 +1,5 @@
 #!/bin/bash
 gcc -o stub stub.c
-./stub 4>xyz
+#./stub 4>xyz
+grash stub.gsh 4>wxy
 # file xyz should contain output
