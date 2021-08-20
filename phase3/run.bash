@@ -38,4 +38,5 @@ allContains1
 printAllDeepContains
 printAllDirectContains
 designRuleRectanglesMustNotIntersectOnTheSameDiagram
+printAllPortContains
 printAllDirections

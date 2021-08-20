@@ -6,6 +6,7 @@
 	printAllDeepContains
 	printAllDirectContains
 	designRuleRectanglesMustNotIntersectOnTheSameDiagram
+	printAllPortContains
     printAllDirections
 
 
